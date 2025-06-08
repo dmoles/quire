@@ -1,0 +1,13 @@
+diff --git a/node_modules/pagedjs-cli/dist/browser.js b/node_modules/pagedjs-cli/dist/browser.js
+index df4f9b3..31863a7 100644
+--- a/node_modules/pagedjs-cli/dist/browser.js
++++ b/node_modules/pagedjs-cli/dist/browser.js
+@@ -30161,7 +30161,7 @@
+ 
+ 			if (typeof node.prelude === "undefined" ||
+ 					node.prelude.type !== "AtrulePrelude" ) {
+-				return;
++				return media;
+ 			}
+ 
+ 			csstree.walk(node.prelude, {

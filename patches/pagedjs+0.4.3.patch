@@ -1,0 +1,91 @@
+diff --git a/node_modules/pagedjs/dist/paged.esm.js b/node_modules/pagedjs/dist/paged.esm.js
+index c5851c9..c714941 100644
+--- a/node_modules/pagedjs/dist/paged.esm.js
++++ b/node_modules/pagedjs/dist/paged.esm.js
+@@ -30169,7 +30169,7 @@ class PrintMedia extends Handler {
+ 
+ 		if (typeof node.prelude === "undefined" ||
+ 				node.prelude.type !== "AtrulePrelude" ) {
+-			return;
++			return media;
+ 		}
+ 
+ 		csstree.walk(node.prelude, {
+diff --git a/node_modules/pagedjs/dist/paged.js b/node_modules/pagedjs/dist/paged.js
+index a04c7ce..922c55e 100644
+--- a/node_modules/pagedjs/dist/paged.js
++++ b/node_modules/pagedjs/dist/paged.js
+@@ -30175,7 +30175,7 @@
+ 
+ 			if (typeof node.prelude === "undefined" ||
+ 					node.prelude.type !== "AtrulePrelude" ) {
+-				return;
++				return media;
+ 			}
+ 
+ 			csstree.walk(node.prelude, {
+diff --git a/node_modules/pagedjs/dist/paged.legacy.js b/node_modules/pagedjs/dist/paged.legacy.js
+index 4bd1e2d..730b09e 100644
+--- a/node_modules/pagedjs/dist/paged.legacy.js
++++ b/node_modules/pagedjs/dist/paged.legacy.js
+@@ -1834,7 +1834,7 @@ continue;}elements[i].setAttribute("data-break-before",prop.value);_nodeBefore.s
+ 				list.insertList(rules, item);
+ 				*/ // Append rules to the end of main rules list
+ list.appendList(rules);// Remove rules from the @media block
+-list.remove(item);}else if(!media.includes("all")&&!media.includes("pagedjs-ignore")){list.remove(item);}}},{key:"getMediaName",value:function getMediaName(node){var media=[];if(typeof node.prelude==="undefined"||node.prelude.type!=="AtrulePrelude"){return;}csstree.walk(node.prelude,{visit:"Identifier",enter:function enter(identNode,iItem,iList){media.push(identNode.name);}});return media;}}]);return PrintMedia;}(Handler);var Splits=/*#__PURE__*/function(_Handler4){(0,_inherits2["default"])(Splits,_Handler4);var _super5=_createSuper(Splits);function Splits(chunker,polisher,caller){(0,_classCallCheck2["default"])(this,Splits);return _super5.call(this,chunker,polisher,caller);}(0,_createClass2["default"])(Splits,[{key:"afterPageLayout",value:function afterPageLayout(pageElement,page,breakToken,chunker){var splits=Array.from(pageElement.querySelectorAll("[data-split-from]"));var pages=pageElement.parentNode;var index=Array.prototype.indexOf.call(pages.children,pageElement);var prevPage;if(index===0){return;}prevPage=pages.children[index-1];var from;// Capture the last from element
++list.remove(item);}else if(!media.includes("all")&&!media.includes("pagedjs-ignore")){list.remove(item);}}},{key:"getMediaName",value:function getMediaName(node){var media=[];if(typeof node.prelude==="undefined"||node.prelude.type!=="AtrulePrelude"){return media;}csstree.walk(node.prelude,{visit:"Identifier",enter:function enter(identNode,iItem,iList){media.push(identNode.name);}});return media;}}]);return PrintMedia;}(Handler);var Splits=/*#__PURE__*/function(_Handler4){(0,_inherits2["default"])(Splits,_Handler4);var _super5=_createSuper(Splits);function Splits(chunker,polisher,caller){(0,_classCallCheck2["default"])(this,Splits);return _super5.call(this,chunker,polisher,caller);}(0,_createClass2["default"])(Splits,[{key:"afterPageLayout",value:function afterPageLayout(pageElement,page,breakToken,chunker){var splits=Array.from(pageElement.querySelectorAll("[data-split-from]"));var pages=pageElement.parentNode;var index=Array.prototype.indexOf.call(pages.children,pageElement);var prevPage;if(index===0){return;}prevPage=pages.children[index-1];var from;// Capture the last from element
+ splits.forEach(function(split){var ref=split.dataset.ref;from=prevPage.querySelector("[data-ref='"+ref+"']:not([data-split-to])");if(from){from.dataset.splitTo=ref;if(!from.dataset.splitFrom){from.dataset.splitOriginal=true;}}});// Fix alignment on the deepest split element
+ if(from){this.handleAlignment(from);}}},{key:"handleAlignment",value:function handleAlignment(node){var styles=window.getComputedStyle(node);var align=styles["text-align"];var alignLast=styles["text-align-last"];node.dataset.lastSplitElement="true";if(align==="justify"&&alignLast==="auto"){node.dataset.alignLastSplitElement="justify";}else{node.dataset.alignLastSplitElement=alignLast;}}}]);return Splits;}(Handler);var Counters=/*#__PURE__*/function(_Handler5){(0,_inherits2["default"])(Counters,_Handler5);var _super6=_createSuper(Counters);function Counters(chunker,polisher,caller){var _this26;(0,_classCallCheck2["default"])(this,Counters);_this26=_super6.call(this,chunker,polisher,caller);_this26.styleSheet=polisher.styleSheet;_this26.counters={};_this26.resetCountersMap=new Map();return _this26;}(0,_createClass2["default"])(Counters,[{key:"onDeclaration",value:function onDeclaration(declaration,dItem,dList,rule){var property=declaration.property;if(property==="counter-increment"){this.handleIncrement(declaration,rule);// clean up empty declaration
+ var hasProperities=false;declaration.value.children.forEach(function(data){if(data.type&&data.type!=="WhiteSpace"){hasProperities=true;}});if(!hasProperities){dList.remove(dItem);}}else if(property==="counter-reset"){this.handleReset(declaration,rule);// clean up empty declaration
+diff --git a/node_modules/pagedjs/dist/paged.polyfill.js b/node_modules/pagedjs/dist/paged.polyfill.js
+index 3100799..027a142 100644
+--- a/node_modules/pagedjs/dist/paged.polyfill.js
++++ b/node_modules/pagedjs/dist/paged.polyfill.js
+@@ -30175,7 +30175,7 @@
+ 
+ 			if (typeof node.prelude === "undefined" ||
+ 					node.prelude.type !== "AtrulePrelude" ) {
+-				return;
++				return media;
+ 			}
+ 
+ 			csstree.walk(node.prelude, {
+diff --git a/node_modules/pagedjs/dist/paged.polyfill.legacy.js b/node_modules/pagedjs/dist/paged.polyfill.legacy.js
+index 9e03a20..bb4c961 100644
+--- a/node_modules/pagedjs/dist/paged.polyfill.legacy.js
++++ b/node_modules/pagedjs/dist/paged.polyfill.legacy.js
+@@ -1834,7 +1834,7 @@ continue;}elements[i].setAttribute("data-break-before",prop.value);_nodeBefore.s
+ 				list.insertList(rules, item);
+ 				*/ // Append rules to the end of main rules list
+ list.appendList(rules);// Remove rules from the @media block
+-list.remove(item);}else if(!media.includes("all")&&!media.includes("pagedjs-ignore")){list.remove(item);}}},{key:"getMediaName",value:function getMediaName(node){var media=[];if(typeof node.prelude==="undefined"||node.prelude.type!=="AtrulePrelude"){return;}csstree.walk(node.prelude,{visit:"Identifier",enter:function enter(identNode,iItem,iList){media.push(identNode.name);}});return media;}}]);return PrintMedia;}(Handler);var Splits=/*#__PURE__*/function(_Handler4){(0,_inherits2["default"])(Splits,_Handler4);var _super5=_createSuper(Splits);function Splits(chunker,polisher,caller){(0,_classCallCheck2["default"])(this,Splits);return _super5.call(this,chunker,polisher,caller);}(0,_createClass2["default"])(Splits,[{key:"afterPageLayout",value:function afterPageLayout(pageElement,page,breakToken,chunker){var splits=Array.from(pageElement.querySelectorAll("[data-split-from]"));var pages=pageElement.parentNode;var index=Array.prototype.indexOf.call(pages.children,pageElement);var prevPage;if(index===0){return;}prevPage=pages.children[index-1];var from;// Capture the last from element
++list.remove(item);}else if(!media.includes("all")&&!media.includes("pagedjs-ignore")){list.remove(item);}}},{key:"getMediaName",value:function getMediaName(node){var media=[];if(typeof node.prelude==="undefined"||node.prelude.type!=="AtrulePrelude"){return media;}csstree.walk(node.prelude,{visit:"Identifier",enter:function enter(identNode,iItem,iList){media.push(identNode.name);}});return media;}}]);return PrintMedia;}(Handler);var Splits=/*#__PURE__*/function(_Handler4){(0,_inherits2["default"])(Splits,_Handler4);var _super5=_createSuper(Splits);function Splits(chunker,polisher,caller){(0,_classCallCheck2["default"])(this,Splits);return _super5.call(this,chunker,polisher,caller);}(0,_createClass2["default"])(Splits,[{key:"afterPageLayout",value:function afterPageLayout(pageElement,page,breakToken,chunker){var splits=Array.from(pageElement.querySelectorAll("[data-split-from]"));var pages=pageElement.parentNode;var index=Array.prototype.indexOf.call(pages.children,pageElement);var prevPage;if(index===0){return;}prevPage=pages.children[index-1];var from;// Capture the last from element
+ splits.forEach(function(split){var ref=split.dataset.ref;from=prevPage.querySelector("[data-ref='"+ref+"']:not([data-split-to])");if(from){from.dataset.splitTo=ref;if(!from.dataset.splitFrom){from.dataset.splitOriginal=true;}}});// Fix alignment on the deepest split element
+ if(from){this.handleAlignment(from);}}},{key:"handleAlignment",value:function handleAlignment(node){var styles=window.getComputedStyle(node);var align=styles["text-align"];var alignLast=styles["text-align-last"];node.dataset.lastSplitElement="true";if(align==="justify"&&alignLast==="auto"){node.dataset.alignLastSplitElement="justify";}else{node.dataset.alignLastSplitElement=alignLast;}}}]);return Splits;}(Handler);var Counters=/*#__PURE__*/function(_Handler5){(0,_inherits2["default"])(Counters,_Handler5);var _super6=_createSuper(Counters);function Counters(chunker,polisher,caller){var _this26;(0,_classCallCheck2["default"])(this,Counters);_this26=_super6.call(this,chunker,polisher,caller);_this26.styleSheet=polisher.styleSheet;_this26.counters={};_this26.resetCountersMap=new Map();return _this26;}(0,_createClass2["default"])(Counters,[{key:"onDeclaration",value:function onDeclaration(declaration,dItem,dList,rule){var property=declaration.property;if(property==="counter-increment"){this.handleIncrement(declaration,rule);// clean up empty declaration
+ var hasProperities=false;declaration.value.children.forEach(function(data){if(data.type&&data.type!=="WhiteSpace"){hasProperities=true;}});if(!hasProperities){dList.remove(dItem);}}else if(property==="counter-reset"){this.handleReset(declaration,rule);// clean up empty declaration
+diff --git a/node_modules/pagedjs/lib/modules/paged-media/print-media.cjs b/node_modules/pagedjs/lib/modules/paged-media/print-media.cjs
+index 08b7639..e6eeec3 100644
+--- a/node_modules/pagedjs/lib/modules/paged-media/print-media.cjs
++++ b/node_modules/pagedjs/lib/modules/paged-media/print-media.cjs
+@@ -63,7 +63,7 @@ var PrintMedia = /*#__PURE__*/function (_Handler) {
+     value: function getMediaName(node) {
+       var media = [];
+       if (typeof node.prelude === "undefined" || node.prelude.type !== "AtrulePrelude") {
+-        return;
++        return media;
+       }
+       _cssTree["default"].walk(node.prelude, {
+         visit: "Identifier",
+diff --git a/node_modules/pagedjs/src/modules/paged-media/print-media.js b/node_modules/pagedjs/src/modules/paged-media/print-media.js
+index 5e34b24..a308e52 100644
+--- a/node_modules/pagedjs/src/modules/paged-media/print-media.js
++++ b/node_modules/pagedjs/src/modules/paged-media/print-media.js
+@@ -51,7 +51,7 @@ class PrintMedia extends Handler {
+ 
+ 		if (typeof node.prelude === "undefined" ||
+ 				node.prelude.type !== "AtrulePrelude" ) {
+-			return;
++			return media;
+ 		}
+ 
+ 		csstree.walk(node.prelude, {
