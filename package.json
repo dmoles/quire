@@ -26,7 +26,8 @@
   },
   "scripts": {
     "test": "ava --verbose --timeout 360s",
-    "test:report": "ava --tap --timeout 360s | tap-xunit > ava.xml"
+    "test:report": "ava --tap --timeout 360s | tap-xunit > ava.xml",
+    "postinstall": "cross-env patch-package --error-on-fail"
   },
   "devDependencies": {
     "ava": "^6.2.0",
