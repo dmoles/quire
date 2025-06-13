@@ -1,8 +1,30 @@
 diff --git a/node_modules/pagedjs-cli/dist/browser.js b/node_modules/pagedjs-cli/dist/browser.js
-index df4f9b3..4831186 100644
+index df4f9b3..b3eff4f 100644
 --- a/node_modules/pagedjs-cli/dist/browser.js
 +++ b/node_modules/pagedjs-cli/dist/browser.js
-@@ -30161,7 +30161,7 @@
+@@ -3814,7 +3814,9 @@
+ 	        item.prev.next = item.next;
+ 	    } else {
+ 	        if (this.head !== item) {
+-	            throw new Error('item doesn\'t belong to list');
++	            var item_prelude = item.data.prelude
++	            var item_selector = item_prelude ? csstree.generate(item_prelude) : "null";
++	            throw new Error(`item ${item_selector} doesn't belong to list`);
+ 	        }
+ 
+ 	        this.head = item.next;
+@@ -3824,7 +3826,9 @@
+ 	        item.next.prev = item.prev;
+ 	    } else {
+ 	        if (this.tail !== item) {
+-	            throw new Error('item doesn\'t belong to list');
++	            var item_prelude = item.data.prelude
++	            var item_selector = item_prelude ? csstree.generate(item_prelude) : "null";
++	            throw new Error(`item ${item_selector} doesn't belong to list`);
+ 	        }
+ 
+ 	        this.tail = item.prev;
+@@ -30161,7 +30165,7 @@
  
  			if (typeof node.prelude === "undefined" ||
  					node.prelude.type !== "AtrulePrelude" ) {
@@ -11,24 +33,25 @@ index df4f9b3..4831186 100644
  			}
  
  			csstree.walk(node.prelude, {
-@@ -30773,7 +30773,9 @@
+@@ -30772,6 +30776,10 @@
+ 
  		onRule(ruleNode, ruleItem, rulelist) {
  			let selector = csstree.generate(ruleNode.prelude);
++			// TODO: something more sophisticated, in case of page breaks
++			if (selector.match(/:(before|after|marker)|\+/)) {
++				return;
++			}
  			if (selector.match(/:(first|last|nth)-of-type/)) {
--				
-+				if (selector.match(/:(before|after)/)) {
-+					return;
-+				}
+ 				
  				let declarations = csstree.generate(ruleNode.block);
- 				declarations = declarations.replace(/[{}]/g,"");
+@@ -30827,6 +30835,10 @@
  
-@@ -30828,6 +30830,9 @@
  		onRule(ruleNode, ruleItem, rulelist) {
  			let selector = csstree.generate(ruleNode.prelude);
++			// TODO: something more sophisticated, in case of page breaks
++			if (selector.match(/:(before|after|marker|(first|last|nth)-of-type)/)) {
++				return;
++			}
  			if (selector.match(/\+/)) {
-+				if (selector.match(/:(before|after)/)) {
-+					return;
-+				}
- 
+ 				
  				let declarations = csstree.generate(ruleNode.block);
- 				declarations = declarations.replace(/[{}]/g,"");
